@@ -1,0 +1,136 @@
+
+.signup-background {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.signup-container {
+  display: flex;
+  width: 850px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+}
+.signup-icon {
+  position: absolute;
+  top: 100px;
+  font-size: 80px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+
+.left-signup-info {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.left-signup-info h1 {
+  position: absolute;
+  top: 170px;
+  left: 120px;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+.left-signup-info h2 {
+  position: absolute;
+  top: 200px;
+  left: 150px;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+.left-signup-info h3 {
+  position: absolute;
+  top: 290px;
+  left: 100px;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.signup-right {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-box {
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  padding: 52px;
+  width: 320px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.signup-box h2 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.signup-box p {
+  font-size: 14px;
+  color: #f9f4f4;
+  margin-bottom: 20px;
+}
+
+
+.input-user {
+  margin-bottom: 15px;
+}
+
+.input-user input,
+.input-user select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #000;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #07128ba1, #246cf1);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.signup-btn:hover {
+  opacity: 0.9;
+}
+
+.signin-text {
+  margin-top: 10px;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.signin-text a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
