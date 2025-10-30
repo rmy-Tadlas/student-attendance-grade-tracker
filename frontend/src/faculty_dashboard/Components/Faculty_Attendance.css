@@ -1,0 +1,110 @@
+.faculty-attendance-container {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  background-color: #f9fafc;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+  margin-left: auto;
+  margin-right: 40px;
+  transform: translate(-50%, -50%);
+  width: 74%; 
+  height: 82%; 
+}
+
+.attendance-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.attendance-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.attendance-filter,
+.attendance-date {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 45%;
+}
+
+.attendance-filter label,
+.attendance-date label {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.attendance-filter select,
+.attendance-date input {
+  padding: 10px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.attendance-table th,
+.attendance-table td {
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.attendance-table thead {
+  background-color: #34495e;
+  color: #fff;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+  background-color: #f2f4f7;
+}
+
+.attendance-table tbody tr:hover {
+  background-color: #e8eef5;
+  transition: 0.3s;
+}
+
+.save-btn {
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+  .attendance-controls {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .attendance-filter,
+  .attendance-date {
+    width: 100%;
+  }
+}

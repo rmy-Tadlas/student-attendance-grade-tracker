@@ -1,0 +1,99 @@
+.faculty-grades-container {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  background-color: #f9fafc;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Poppins", sans-serif;
+  margin-left: auto;
+  margin-right: 40px;
+  transform: translate(-50%, -50%);
+  width: 74%; 
+  height: 82%; 
+}
+
+.faculty-grades-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+}
+.filter-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.filter-container label {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.filter-container select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+}
+
+.faculty-grades-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.faculty-grades-table th,
+.faculty-grades-table td {
+  padding: 14px 20px;
+  text-align: left;
+}
+
+.faculty-grades-table thead {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+.faculty-grades-table tbody tr:nth-child(even) {
+  background-color: #f2f4f7;
+}
+
+.faculty-grades-table tbody tr:hover {
+  background-color: #e8eef5;
+  transition: 0.3s;
+}
+
+.faculty-grades-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+.faculty-grades-table td {
+  font-size: 15px;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .faculty-grades-container {
+    padding: 20px;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .faculty-grades-table th,
+  .faculty-grades-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .faculty-grades-title {
+    font-size: 22px;
+  }
+}
