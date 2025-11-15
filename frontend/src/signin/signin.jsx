@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import "./login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import bgImage from "../assets/signinbg.png";
 import { FaUser, FaLock, FaClipboardList } from "react-icons/fa";
+import axiosClient from "../api/axiosClient";
 
-function Signin() {
-  const navigate = useNavigate();
-  const [role, setRole] = useState("student"); 
+export default function SignIn() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [role, setRole] = useState("student"); // Added role state
+  const [message, setMessage] = useState(""); // Added message state
 
-  const handleLogin = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-
-    if (role === "student") navigate("/dashboard");
-    else if (role === "faculty") navigate("/faculty");
-    else if (role === "admin") navigate("/admin");
+    try {
+      const { data } = await axiosClient.post("/login", { ...form, role });
+      alert(`Welcome ${data.user.fullname} (${data.user.role})`);
+    } catch (err) {
+      setMessage("Invalid credentials");
+    }
   };
 
   return (
@@ -35,15 +42,29 @@ function Signin() {
             <h2>Login</h2>
             <p>Welcome back! Please login to your account.</p>
 
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
               <div className="input-group">
                 <FaUser className="input-icon" />
-                <input type="text" placeholder="Username" required />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div className="input-group">
                 <FaLock className="input-icon" />
-                <input type="password" placeholder="Password" required />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div className="input-group">
@@ -63,6 +84,8 @@ function Signin() {
               </button>
             </form>
 
+            {message && <p className="login-message">{message}</p>}
+
             <p className="signup-text">
               Don’t have an account? <Link to="/signup">Signup</Link>
             </p>
@@ -72,5 +95,3 @@ function Signin() {
     </div>
   );
 }
-
-export default Signin;
