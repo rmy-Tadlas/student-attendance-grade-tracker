@@ -1,0 +1,109 @@
+.admin-profile-container {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 92%;
+  background-color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start; 
+    gap: 20px;
+  padding: 40px;
+}
+/* Pending Students - Excel style */
+.pending-students {
+  background-color: #24386a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  flex: 1.5;
+  min-width: 400px;
+}
+
+.pending-students h2 {
+  margin-bottom: 15px;
+  border-bottom: 2px solid #fff; /* header line */
+  padding-bottom: 5px;
+}
+
+
+.pending-students .student-row {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  border-bottom: 1px solid #fff; 
+  padding: 8px 0;
+  gap: 10px;
+}
+
+.pending-students .student-row:hover {
+  background-color: #24386a;
+  cursor: pointer;
+}
+.pending-students .student-row p {
+  margin: 0;
+  flex: 1;
+}
+
+.faculty-form-container { 
+  background-color: #24386a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 20px; 
+  flex: 1; 
+  min-width: 250px;
+}
+
+.faculty-form-container h2 {
+  margin-bottom: 15px;
+}
+
+.faculty-form-container form div {
+  margin-bottom: 10px;
+}
+
+.faculty-form-container input {
+  width:  90%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.faculty-form-container button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* SEARCH BAR */
+.search-input {
+  width: 95%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* STATUS COLORS */
+.status {
+  width: 100px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: #4caf50;
+}
+
+.status.accepted {
+  color: #4caf50;
+}
+
+.status.rejected {
+  color: #ff4d4d;
+}

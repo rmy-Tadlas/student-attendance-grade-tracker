@@ -9,20 +9,20 @@ import StudentDashboard from "./student_dashboard/student_dashboard";
 import FacultyDashboard from "./faculty_dashboard/Faculty_dashboard";
 import AdminDashboard from "./admin_dashboard/Admin_dashboard";
 
-import { checkAuth } from "./api/auth"; // make sure this file exists
+//import { checkAuth } from "./api/auth"; // temporary disabled
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({ role: "admin" });
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      const data = await checkAuth();
-      if (data) setUser(data);
-      setLoading(false);
-    };
-    verifyUser();
-  }, []);
+    // useEffect(() => {
+  //   const verifyUser = async () => {
+  //     const data = await checkAuth();
+  //     if (data) setUser(data);
+  //     setLoading(false);
+  //   };
+  //   verifyUser();
+  // }, []);
 
   if (loading) return <div>Loading...</div>;
 

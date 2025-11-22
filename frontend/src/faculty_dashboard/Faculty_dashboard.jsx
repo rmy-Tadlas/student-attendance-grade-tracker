@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet, useLocation, Routes, Route } from "react-router-dom";
+import { Link, Outlet, Routes, Route, useLocation } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaUserTie,
@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import "./faculty_dashboard.css";
 import bgImage from "../assets/facultybackground.png";
+
 import Faculty_Myprofile from "./Components/Faculty_Myprofile";
 import Faculty_Schedule from "./Components/Faculty_Schedule";
 import Faculty_Grades from "./Components/Faculty_Grades";
@@ -19,14 +20,11 @@ function FacultyDashboard() {
   const isMainDashboard = location.pathname === "/faculty";
 
   return (
-    <div
-      className="faculty-dashboard-container"
-      style={{ backgroundImage: `url(${bgImage})` }}
-    >
+    <div className="faculty-dashboard-container" style={{ backgroundImage: `url(${bgImage})` }}>
       <nav className="faculty-sidebar">
         <ul className="faculty-nav-list">
           <li className={`faculty-nav-item ${isMainDashboard ? "active" : ""}`}>
-           <Link to="/faculty" className="faculty-nav-link">
+            <Link to="/faculty" className="faculty-nav-link">
               <FaTachometerAlt className="faculty-nav-icon" /> Dashboard
             </Link>
           </li>
@@ -53,18 +51,15 @@ function FacultyDashboard() {
         </ul>
       </nav>
 
-
       {isMainDashboard && (
         <>
           <div className="faculty-border-box"></div>
-
           <div className="dashboard-header">
             <div className="faculty-welcome-text">
-               Welcome Back, <span className="faculty-name">Faculty!</span>
-               </div>
-            <div className="dashboard-title">Dashboard</div>
+              Welcome Back, <span className="faculty-name">Faculty!</span>
             </div>
-
+            <div className="dashboard-title">Dashboard</div>
+          </div>
           <div className="faculty-classes-today">Classes Today</div>
           <div className="faculty-students-count">Total Students</div>
           <div className="faculty-reports-status">Pending Reports</div>
@@ -74,12 +69,11 @@ function FacultyDashboard() {
       )}
 
       <Routes>
-  <Route path="dashboard/myprofile" element={<Faculty_Myprofile />} />
-  <Route path="dashboard/schedule" element={<Faculty_Schedule />} />
-  <Route path="dashboard/grades" element={<Faculty_Grades />} />
-  <Route path="dashboard/attendance" element={<Faculty_Attendance />} />
-</Routes>
-
+        <Route path="dashboard/myprofile" element={<Faculty_Myprofile />} />
+        <Route path="dashboard/schedule" element={<Faculty_Schedule />} />
+        <Route path="dashboard/grades" element={<Faculty_Grades />} />
+        <Route path="dashboard/attendance" element={<Faculty_Attendance />} />
+      </Routes>
 
       <Outlet />
     </div>

@@ -3,25 +3,28 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import bgImage from "../assets/signinbg.png";
 import { FaUser, FaLock, FaClipboardList } from "react-icons/fa";
-import axiosClient from "../api/axiosClient";
+// import axiosClient from "../api/axiosClient";  // DISABLED temporarily
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [role, setRole] = useState("student"); // Added role state
-  const [message, setMessage] = useState(""); // Added message state
+  const [role, setRole] = useState("student");
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  //  TEMPORARY BYPASS (NO BACKEND)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axiosClient.post("/login", { ...form, role });
-      alert(`Welcome ${data.user.fullname} (${data.user.role})`);
-    } catch (err) {
-      setMessage("Invalid credentials");
-    }
+
+    // Simulate successful login
+    alert(`TEMP LOGIN SUCCESS: Logged in as ${role}`);
+
+    // Redirect based on selected role
+    if (role === "student") window.location.href = "/student_dashboard";
+    if (role === "faculty") window.location.href = "/faculty";
+    if (role === "admin") window.location.href = "/admin";
   };
 
   return (
