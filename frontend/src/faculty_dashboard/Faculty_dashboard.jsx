@@ -56,7 +56,6 @@ function FacultyDashboard() {
           <div className="faculty-border-box"></div>
           <div className="dashboard-header">
             <div className="faculty-welcome-text">
-              Welcome Back, <span className="faculty-name">Faculty!</span>
             </div>
             <div className="dashboard-title">Dashboard</div>
           </div>

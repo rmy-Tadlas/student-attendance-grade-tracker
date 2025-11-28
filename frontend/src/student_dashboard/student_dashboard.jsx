@@ -9,14 +9,14 @@ import {
 } from "react-icons/fa";
 import "./student_dashboard.css";
 import bgImage from "../assets/studentdashboard.png";
-import MyProfile from "./components/MyProfile";
-import Schedule from "./components/Schedule";
-import Grades from "./components/Grades";
-import Attendance from "./components/Attendance";
+import MyProfile from "./Components/myProfile";
+import Schedule from "./Components/schedule";
+import Grades from "./Components/grades";
+import Attendance from "./Components/attendance";
 
 function StudentDashboard() {
   const location = useLocation();
-  const isMainDashboard = location.pathname === "/dashboard";
+  const isMainDashboard = location.pathname === "/student_dashboard";
 
   return (
     <div
@@ -26,59 +26,106 @@ function StudentDashboard() {
       <nav className="sidebar">
         <ul className="nav-list">
           <li className={`nav-item ${isMainDashboard ? "active" : ""}`}>
-            <Link to="/dashboard" className="nav-link">
+            <Link to="/student_dashboard" className="nav-link">
               <FaTachometerAlt className="nav-icon" /> Dashboard
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/dashboard/myprofile" className="nav-link">
+            <Link
+              to="/student_dashboard/dashboard/myprofile"
+              className="nav-link"
+            >
               <FaUser className="nav-icon" /> My Profile
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/dashboard/schedule" className="nav-link">
+            <Link
+              to="/student_dashboard/dashboard/schedule"
+              className="nav-link"
+            >
               <FaCalendarAlt className="nav-icon" /> Schedule
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/dashboard/grades" className="nav-link">
+            <Link
+              to="/student_dashboard/dashboard/grades"
+              className="nav-link"
+            >
               <FaBook className="nav-icon" /> Grades
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/dashboard/attendance" className="nav-link">
+            <Link
+              to="/student_dashboard/dashboard/attendance"
+              className="nav-link"
+            >
               <FaClipboardList className="nav-icon" /> Attendance
             </Link>
           </li>
         </ul>
       </nav>
 
-
       {isMainDashboard && (
         <>
           <div className="border-box"></div>
 
           <div className="dashboard-header">
-            <div>
-             
-            </div>
+            <div></div>
             <div>Dashboard</div>
           </div>
 
-          <div className="next-class">Next class</div>
-          <div className="attendance">Attendance rate</div>
-          <div className="late">Lates</div>
-          <div className="classes-attended">Total classes attended</div>
-          <div className="absenses">Absences</div>
-          <div className="average-grade">Average grade</div>
+          {/* NEXT CLASS BOX */}
+          <div className="next-class">
+            <div className="box-title">Next Class</div>
+
+            <div
+              className="small-box"
+              onClick={() =>
+                (window.location.href =
+                  "/student_dashboard/dashboard/schedule")
+              }
+            >
+              View Schedule
+            </div>
+          </div>
+
+          {/* PROFILE BOX */}
+          <div className="Profile">
+            <div className="box-title">My Profile</div>
+
+            <div
+              className="small-box"
+              onClick={() =>
+                (window.location.href =
+                  "/student_dashboard/dashboard/myprofile")
+              }
+            >
+              Open Profile
+            </div>
+          </div>
+
+          {/* GWA BOX */}
+          <div className="average-grade">
+            <div className="box-title">GWA</div>
+
+            <div
+              className="small-box"
+              onClick={() =>
+                (window.location.href =
+                  "/student_dashboard/dashboard/grades")
+              }
+            >
+              View Grades
+            </div>
+          </div>
         </>
       )}
 
       <Routes>
-        <Route path="myprofile" element={<MyProfile />} />
-        <Route path="schedule" element={<Schedule />} />
-        <Route path="grades" element={<Grades />} />
-        <Route path="attendance" element={<Attendance />} />
+        <Route path="dashboard/myProfile" element={<MyProfile />} />
+        <Route path="dashboard/schedule" element={<Schedule />} />
+        <Route path="dashboard/grades" element={<Grades />} />
+        <Route path="dashboard/attendance" element={<Attendance />} />
       </Routes>
 
       <Outlet />

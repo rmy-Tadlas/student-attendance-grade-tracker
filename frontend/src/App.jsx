@@ -9,20 +9,23 @@ import StudentDashboard from "./student_dashboard/student_dashboard";
 import FacultyDashboard from "./faculty_dashboard/Faculty_dashboard";
 import AdminDashboard from "./admin_dashboard/Admin_dashboard";
 
-//import { checkAuth } from "./api/auth"; // temporary disabled
 
 function App() {
   const [user, setUser] = useState({ role: "admin" });
   const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     const data = await checkAuth();
-  //     if (data) setUser(data);
-  //     setLoading(false);
-  //   };
-  //   verifyUser();
-  // }, []);
+
+// function for api
+     useEffect(() => {
+    const verifyUser = async () => {
+     const data = await checkAuth();
+     if (data) setUser(data);
+     setLoading(false);
+    };
+     verifyUser();
+   }, []);
+
+
 
   if (loading) return <div>Loading...</div>;
 
@@ -34,7 +37,7 @@ function App() {
 
       {/* Protected routes */}
       <Route
-        path="/student_dashboard"
+        path="/student_dashboard/*"
         element={user ? <StudentDashboard /> : <Navigate to="/signin" />}
       />
       <Route

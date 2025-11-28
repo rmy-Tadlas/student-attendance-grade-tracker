@@ -4,165 +4,188 @@ import autoTable from "jspdf-autotable";
 import "./Faculty_Grades.css";
 
 function Faculty_Grades() {
+  const [selectedTerm, setSelectedTerm] = useState("1st");
   const [selectedSection, setSelectedSection] = useState("all");
-  const [selectedType, setSelectedType] = useState("all"); // filter by type
-  const [selectedDate, setSelectedDate] = useState(""); // filter by date
+  const [selectedSubject, setSelectedSubject] = useState("all");
 
-  // Each student now has separate scores for quiz, assignment, exam with date
-  const [grades, setGrades] = useState([
-    { 
-      id: 1, subject: "Mathematics 101", section: "BSIT 1A", name: "Juan Dela Cruz", 
-      scores: [
-        { type: "quiz", score: 90, date: "2025-10-25" },
-        { type: "assignment", score: 85, date: "2025-10-26" },
-        { type: "exam", score: 95, date: "2025-10-30" },
-      ]
+  const [students, setStudents] = useState([
+    {
+      id: 1,
+      name: "Juan Dela Cruz",
+      section: "BSIT 1A",
+      subject: "Math 101",
+      sem1: { midterm: 2.0, finalterm: 1.5, finalGrade: 1.7, status: "Passed" },
+      sem2: { midterm: 1.5, finalterm: 1.3, finalGrade: 1.4, status: "Passed" }
     },
-    { 
-      id: 2, subject: "Mathematics 101", section: "BSIT 1A", name: "Maria Santos", 
-      scores: [
-        { type: "quiz", score: 88, date: "2025-10-25" },
-        { type: "assignment", score: 90, date: "2025-10-26" },
-        { type: "exam", score: 85, date: "2025-10-30" },
-      ]
+    {
+      id: 2,
+      name: "Maria Santos",
+      section: "BSIT 1A",
+      subject: "Math 101",
+      sem1: { midterm: 1.5, finalterm: 1.3, finalGrade: 1.4, status: "Passed" },
+      sem2: { midterm: 2.0, finalterm: 1.5, finalGrade: 1.7, status: "Passed" }
     },
-    // Add more students as needed
+    {
+      id: 3,
+      name: "Jhon Paul",
+      section: "BSIT 1B",
+      subject: "Math 101",
+      sem1: { midterm: 1.0, finalterm: 1.0, finalGrade: 1.0, status: "Passed" },
+      sem2: { midterm: 2.0, finalterm: 2.0, finalGrade: 2.0, status: "Passed" }
+    }
   ]);
 
-  const handleScoreChange = (studentId, type, value) => {
-    const updatedGrades = grades.map(student => {
-      if (student.id === studentId) {
-        const updatedScores = student.scores.map(s => 
-          s.type === type ? { ...s, score: Number(value) } : s
-        );
-        return { ...student, scores: updatedScores };
-      }
-      return student;
-    });
-    setGrades(updatedGrades);
-  };
+  const handleInputChange = (id, field, value) => {
+    setStudents((prev) =>
+      prev.map((s) => {
+        if (s.id === id) {
+          const updated = {
+            ...s,
+            [selectedTerm === "1st" ? "sem1" : "sem2"]: {
+              ...s[selectedTerm === "1st" ? "sem1" : "sem2"],
+              [field]: Number(value),
+            },
+          };
 
-  const calculateFinalGrade = (scores) => {
-    const quiz = scores.find(s => s.type === "quiz")?.score || 0;
-    const assignment = scores.find(s => s.type === "assignment")?.score || 0;
-    const exam = scores.find(s => s.type === "exam")?.score || 0;
-    return Math.round(quiz * 0.3 + assignment * 0.2 + exam * 0.5);
-  };
+          const mid = updated[selectedTerm === "1st" ? "sem1" : "sem2"].midterm;
+          const fin = updated[selectedTerm === "1st" ? "sem1" : "sem2"].finalterm;
 
-  const filteredGrades = grades
-    .filter(g => selectedSection === "all" || g.section === selectedSection)
-    .map(student => ({
-      ...student,
-      scores: student.scores
-        .filter(s => selectedType === "all" || s.type === selectedType)
-        .filter(s => !selectedDate || s.date === selectedDate) // filter by date
-    }))
-    .filter(student => student.scores.length > 0); // remove students with no scores after filtering
+          const finalGrade = Math.round(mid * 0.4 + fin * 0.6);
+          updated[selectedTerm === "1st" ? "sem1" : "sem2"].finalGrade = finalGrade;
+          updated[selectedTerm === "1st" ? "sem1" : "sem2"].status =
+            finalGrade >= 75 ? "Passed" : "Failed";
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    doc.text("Faculty Grade Records", 14, 15);
-    doc.setFontSize(11);
-    doc.text(
-      selectedSection === "all"
-        ? "All Student Grades Overview"
-        : `Grades for ${selectedSection}`,
-      14,
-      22
-    );
-
-    const tableColumn = ["Subject", "Section", "Student Name", "Type", "Score", "Final Grade"];
-    const tableRows = [];
-    filteredGrades.forEach(student => {
-      student.scores.forEach(s => {
-        tableRows.push([
-          student.subject,
-          student.section,
-          student.name,
-          s.type,
-          s.score,
-          calculateFinalGrade(student.scores)
-        ]);
-      });
-    });
-
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-      startY: 28,
-      theme: "grid",
-      headStyles: { fillColor: [44, 62, 80] },
-    });
-
-    doc.save(
-      selectedSection === "all"
-        ? "Faculty_Grade_Records.pdf"
-        : `Faculty_Grade_Records_${selectedSection}.pdf`
+          return updated;
+        }
+        return s;
+      })
     );
   };
+
+  const filteredStudents = students.filter(
+    (s) =>
+      (selectedSection === "all" || s.section === selectedSection) &&
+      (selectedSubject === "all" || s.subject === selectedSubject)
+  );
+
+   const downloadPDF = () => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text("Faculty Grade Report", 14, 15);
+
+  doc.setFontSize(11);
+  doc.text(
+    `Term: ${selectedTerm} Semester | Subject: ${selectedSubject} | Section: ${selectedSection}`,
+    14,
+    25
+  );
+
+  const tableData = filteredStudents.map((s) => {
+    const t = selectedTerm === "1st" ? s.sem1 : s.sem2;
+    return [s.name, t.midterm, t.finalterm, t.finalGrade, t.status];
+  });
+
+  autoTable(doc, {
+    head: [["Full Name", "Midterm", "Final Term", "Final Grade", "Status"]],
+    body: tableData,
+    startY: 35,
+  });
+
+  doc.save("Grades_Report.pdf");
+};
+
 
   return (
-    <div className="faculty-grades-container">
-      <h1 className="faculty-grades-title">Grade Records</h1>
+    <div className="grades-container">
+      <h1 className="grades-title">Faculty Grade Records</h1>
 
-      <div className="filter-container">
-        <label>Section:</label>
-        <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)}>
-          <option value="all">All Sections</option>
-          <option value="BSIT 1A">BSIT 1A</option>
-          <option value="BSIT 1B">BSIT 1B</option>
-          <option value="BSIT 2A">BSIT 2A</option>
-          <option value="BSIT 3A">BSIT 3A</option>
-        </select>
+      <div className="filters">
+  <div className="filters-left">
+    <div>
+      <label>Term:</label>
+      <select value={selectedTerm} onChange={(e) => setSelectedTerm(e.target.value)}>
+        <option value="1st">1st Semester</option>
+        <option value="2nd">2nd Semester</option>
+      </select>
+    </div>
 
-        <label>Score Type:</label>
-        <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-          <option value="all">All</option>
-          <option value="quiz">Quiz</option>
-          <option value="assignment">Assignment</option>
-          <option value="exam">Exam</option>
-        </select>
+    <div>
+      <label>Subject:</label>
+      <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
+        <option value="Math 101">Math 101</option>
+        <option value="Programming 1">Programming 1</option>
+        <option value="IT Fundamentals">IT Fundamentals</option>
+      </select>
+    </div>
 
-        <label>Date:</label>
-        <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+    <div>
+      <label>Section:</label>
+      <select value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)}>
+        <option value="BSIT 1A">BSIT 1A</option>
+        <option value="BSIT 1B">BSIT 1B</option>
+        <option value="BSIT 2A">BSIT 2A</option>
+      </select>
+    </div>
 
-        <button className="download-btn" onClick={downloadPDF}>Download PDF</button>
-      </div>
+    {/* PDF button immediately after Section */}
+    <button className="pdf-btn" onClick={downloadPDF}>Download PDF</button>
+  </div>
+</div>
 
-      <table className="faculty-grades-table">
+
+     
+
+      <table className="grades-table">
         <thead>
           <tr>
-            <th>Subject</th>
-            <th>Section</th>
-            <th>Student Name</th>
-            <th>Type</th>
-            <th>Score</th>
+            <th>Full Name</th>
+            <th>Midterm</th>
+            <th>Final Term</th>
             <th>Final Grade</th>
-            <th>Action</th>
+            <th>Status</th>
           </tr>
         </thead>
+
         <tbody>
-          {filteredGrades.map(student =>
-            student.scores.map(s => (
-              <tr key={`${student.id}-${s.type}-${s.date}`}>
-                <td>{student.subject}</td>
-                <td>{student.section}</td>
-                <td>{student.name}</td>
-                <td>{s.type}</td>
+          {filteredStudents.map((s) => {
+            const termData = selectedTerm === "1st" ? s.sem1 : s.sem2;
+
+            return (
+              <tr key={s.id}>
+                <td>{s.name}</td>
+
                 <td>
                   <input
                     type="number"
                     min="0"
                     max="100"
-                    value={s.score}
-                    onChange={(e) => handleScoreChange(student.id, s.type, e.target.value)}
+                    value={termData.midterm}
+                    onChange={(e) =>
+                      handleInputChange(s.id, "midterm", e.target.value)
+                    }
                   />
                 </td>
-                <td>{calculateFinalGrade(student.scores)}</td>
-                <td><button className="save-btn">Save</button></td>
+
+                <td>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={termData.finalterm}
+                    onChange={(e) =>
+                      handleInputChange(s.id, "finalterm", e.target.value)
+                    }
+                  />
+                </td>
+
+                <td>{termData.finalGrade}</td>
+                <td className={termData.status === "Passed" ? "passed" : "failed"}>
+                  {termData.status}
+                </td>
               </tr>
-            ))
-          )}
+            );
+          })}
         </tbody>
       </table>
     </div>

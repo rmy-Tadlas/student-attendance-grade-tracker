@@ -1,0 +1,48 @@
+/* container */
+.schedule-container {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: 74%;
+  height: 82%;
+  padding: 20px;
+  background: #f9fafc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: "Poppins", sans-serif;
+  overflow: auto;
+}
+
+/* title */
+.schedule-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* table wrapper */
+.schedule-table {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.schedule-download-btn {
+  margin-bottom: 15px;
+  padding: 11px 16px;
+  background-color: #1f6feb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.schedule-download-btn:hover {
+  background-color: #164ea7;
+}
+
+

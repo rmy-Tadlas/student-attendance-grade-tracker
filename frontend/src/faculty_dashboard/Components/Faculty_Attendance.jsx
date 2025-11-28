@@ -1,48 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Faculty_Attendance.css";
 
 function Faculty_Attendance() {
   const [selectedSection, setSelectedSection] = useState("BSIT 1B");
   const [selectedDate, setSelectedDate] = useState("");
   const [isViewingHistory, setIsViewingHistory] = useState(false);
-  const [filterDate, setFilterDate] = useState("");
   const [showNotification, setShowNotification] = useState(false);
+  const [selectedSubject, setSelectedSubject] = useState("IT 110");
 
-  // ✅ Make students a state so status can update dynamically
-  const [students, setStudents] = useState([
-    { name: "Mark Dela Cruz", status: "Present" },
-    { name: "Anna Villanueva", status: "Excused" },
-    { name: "Leo Mendoza", status: "Absent" },
-  ]);
-
-  // Simulated saved attendance records
-  const attendanceHistory = [
-    { date: "2025-10-20", section: "BSIT 1B" },
-    { date: "2025-10-21", section: "BSIT 1B" },
-    { date: "2025-10-22", section: "BSIT 1B" },
-  ];
-
-  const handleViewHistory = (date) => {
-    setFilterDate(date);
-    setIsViewingHistory(true);
+  const subjectStudents = {
+    "IT 110": [
+      { name: "Mark Dela Cruz", status: "Present" },
+      { name: "Anna Villanueva", status: "Excused" },
+      { name: "Leo Mendoza", status: "Absent" },
+    ],
+    "IT 109": [
+      { name: "Maria Santos", status: "Present" },
+      { name: "Ben Reyes", status: "Absent" },
+      { name: "Kurt Salvador", status: "Excused" },
+    ],
+    "IT 108": [
+      { name: "John Carlo", status: "Present" },
+      { name: "Michelle Garnet", status: "Present" },
+      { name: "Paolo Ortega", status: "Absent" },
+    ],
+    "IT 107": [
+      { name: "Samantha Cruz", status: "Excused" },
+      { name: "Elijah Torres", status: "Present" },
+      { name: "Amelia Lewis", status: "Present" },
+      { name: "Cardo Dalisay", status: "Excused" },
+      { name: "Cardo Montenegro", status: "Present" },
+      { name: "Cardo Panday", status: "Present" },
+      { name: "Rico Navarro", status: "Present" },
+      { name: "Emma Carter", status: "Excused" },
+      { name: "Liam Johnson", status: "Present" },
+      { name: "Olivia Martinez", status: "Present" },
+      { name: "Tangol Montenegro", status: "Present" },
+      { name: "Noah Smith", status: "Present" },
+      { name: "Ava Thompson", status: "Present" },
+      { name: "Ethan Davis", status: "Excused" },
+      { name: "Sophia Wilson", status: "Present" },
+      { name: "Mason Brown", status: "Present" },
+    ],
   };
 
-  const handleBack = () => {
-    setIsViewingHistory(false);
-    setFilterDate("");
-  };
+  const [students, setStudents] = useState(subjectStudents[selectedSubject]);
+
+  useEffect(() => {
+    setStudents(subjectStudents[selectedSubject]);
+  }, [selectedSubject]);
 
   const handleSaveAttendance = () => {
     if (!selectedDate) {
       alert("Please select a date before saving attendance.");
       return;
     }
-
     setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 2000); // Hide after 2s
+    setTimeout(() => setShowNotification(false), 2000);
   };
 
-  // ✅ Live count summary
   const presentCount = students.filter((s) => s.status === "Present").length;
   const absentCount = students.filter((s) => s.status === "Absent").length;
   const excusedCount = students.filter((s) => s.status === "Excused").length;
@@ -51,12 +67,27 @@ function Faculty_Attendance() {
     <div className="faculty-attendance-container">
       <h1 className="attendance-title">Faculty Attendance Tracker</h1>
 
-      {/* Notification Popup */}
       {showNotification && (
         <div className="notification">✅ Attendance saved successfully!</div>
       )}
 
-      {!isViewingHistory ? (
+      <div className="subject-controls">
+        <div className="subject-filter">
+          <label>Subject:</label>
+          <select
+            value={selectedSubject}
+            onChange={(e) => setSelectedSubject(e.target.value)}
+          >
+            {Object.keys(subjectStudents).map((subj, idx) => (
+              <option key={idx} value={subj}>
+                {subj}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {!isViewingHistory && (
         <>
           <div className="attendance-controls">
             <div className="attendance-filter">
@@ -79,52 +110,6 @@ function Faculty_Attendance() {
               />
             </div>
 
-            {/* Attendance History Filter beside Date */}
-            <div className="attendance-history">
-              <h1>Attendance History:</h1>
-              <div className="attendance-date">
-                <input
-                  type="date"
-                  value={filterDate}
-                  onChange={(e) => handleViewHistory(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="attendance-content">
-            <table className="attendance-table">
-              <thead>
-                <tr>
-                  <th>Student Name</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {students.map((s, index) => (
-                  <tr key={index}>
-                    <td>{s.name}</td>
-                    <td>
-                      {/* ✅ Dropdown updates state and live summary */}
-                      <select
-                        value={s.status}
-                        onChange={(e) => {
-                          const updated = [...students];
-                          updated[index].status = e.target.value;
-                          setStudents(updated);
-                        }}
-                      >
-                        <option value="Present">Present</option>
-                        <option value="Absent">Absent</option>
-                        <option value="Excused">Excused</option>
-                      </select>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* ✅ Summary Boxes with Live Counts */}
             <div className="attendance-summary">
               <div className="summary-box present-box">
                 <h3>Present</h3>
@@ -141,33 +126,72 @@ function Faculty_Attendance() {
             </div>
           </div>
 
+          {/* Scrollable Students Table */}
+          <div className="attendance-table-wrapper">
+            <table className="attendance-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((s, index) => (
+                  <tr key={index}>
+                    <td>{s.name}</td>
+                    <td className="status-buttons">
+                      <button
+                        className={`status-btn present ${
+                          s.status === "Present" ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          const updated = [...students];
+                          updated[index].status = "Present";
+                          setStudents(updated);
+                        }}
+                      >
+                        ✓
+                      </button>
+                      <button
+                        className={`status-btn absent ${
+                          s.status === "Absent" ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          const updated = [...students];
+                          updated[index].status = "Absent";
+                          setStudents(updated);
+                        }}
+                      >
+                        X
+                      </button>
+                      <button
+                        className={`status-btn excused ${
+                          s.status === "Excused" ? "active" : ""
+                        }`}
+                        onClick={() => {
+                          const updated = [...students];
+                          updated[index].status = "Excused";
+                          setStudents(updated);
+                        }}
+                      >
+                        O
+                      </button>
+
+                      {/* === ADDITION START === */}
+                      {/* This span displays the current status text next to the buttons */}
+                      <span className="status-text">{s.status}</span>
+                      {/* === ADDITION END === */}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           <button className="save-btn" onClick={handleSaveAttendance}>
             Save Attendance
           </button>
         </>
-      ) : (
-        <div className="attendance-history-view">
-          <button className="back-btn" onClick={handleBack}>
-            ← Back to Attendance Tracker
-          </button>
-          <h2>Attendance Records for {filterDate}</h2>
-          <table className="attendance-table">
-            <thead>
-              <tr>
-                <th>Student Name</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((s, index) => (
-                <tr key={index}>
-                  <td>{s.name}</td>
-                  <td>{s.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       )}
     </div>
   );

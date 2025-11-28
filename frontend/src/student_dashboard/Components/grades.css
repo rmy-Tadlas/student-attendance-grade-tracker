@@ -1,0 +1,146 @@
+
+.grade-container {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: 74%;
+  height: 82%;
+  padding: 35px;
+  background: #f9fafc;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: "Poppins", sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+ .studentfilters {
+  position: relative;
+  top: 25px;
+  left: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start; /* Align items to the left */
+  margin-bottom: 20px;
+}
+@media (max-width: 600px) {
+  .studentfilters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.studentfilters select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+
+.gwa-table {
+  position: absolute;
+  top: 185px;
+  left: 55px;
+  width: 91%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 120px; /* Added 2fr for Program column */
+  padding: 12px;
+  font-size: 16px;
+}
+
+.table-header {
+  background: #d7d8da;
+  font-weight: 600;
+}
+
+.table-row {
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+}
+
+
+.details-btn {
+  padding: 8px 14px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.details-btn:hover {
+  background: #2563eb;
+}
+
+.details-box {
+  position:absolute;
+  top: 295px;
+  left: 54px;
+  width: 88%;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #d7d8da;
+}
+
+.details-box h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.details-table {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.details-header, .details-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 12px;
+}
+
+.details-header {
+  background: #e5e7eb;
+  font-weight: 600;
+}
+
+.no-data {
+  padding: 12px;
+  text-align: center;
+  color: #2563eb;
+}
+
+.student-download-btn {
+  position: absolute;
+  top: 141px;
+  left: 330px;
+  padding: 11px 16px;
+  background-color: #1f6feb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.student-download-btn:hover {
+  background-color: #2563eb;
+}

@@ -7,6 +7,7 @@ function Faculty_Myprofile() {
     <div className="profile-container">
       <div className="profile-icon">
         <FaUserCircle className="user-icon" aria-hidden="true" />
+        
         <div className="profile-title">My Profile</div>
       </div>
 

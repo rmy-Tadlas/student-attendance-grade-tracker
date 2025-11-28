@@ -17,16 +17,38 @@
 }
 
 .admin-profile-icon {
-  width: 35%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  position: relative;
+  top: 20px;
+  left: 30px;
+  margin-right: 20px;
 }
 
-.admin-user-icon {
-  font-size: 170px;
-  color: #24386a;
+.profile-img,.user-icon {
+  width: 150px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.upload-overlay {
+  position: absolute;
+  top: 130px;
+  left: 100px;
+  background: #000000;
+  color: #fff;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: 0.3s ease;
+}
+
+#photo-upload {
+  display: none;
 }
 
 .admin-profile-title {
